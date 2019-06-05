@@ -33,9 +33,8 @@ int inputInt(const char *e)
     try
     {
 
-      std::cout << std::endl
-                << std::endl
-                << e;
+      std::cout
+          << e;
 
       std::cin.clear();
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -64,9 +63,8 @@ float inputFloat(const char *e)
     try
     {
 
-      std::cout << std::endl
-                << std::endl
-                << e;
+      std::cout
+          << e;
 
       std::cin.clear();
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -91,6 +89,12 @@ int getOption()
   {
     try
     {
+      std::cout << "*** Choose one of these options" << std::endl
+                << "1. Calculate MIPS average" << std::endl
+                << "2. Compare MIPS results" << std::endl
+                << "3. Exit" << std::endl
+                << std::endl;
+
       const int option = inputInt(">> Choose an option: ");
 
       if (option > 0 && option < 4)
@@ -103,7 +107,8 @@ int getOption()
     catch (const char *e)
     {
       std::cout << std::endl
-                << "ERROR: " << e;
+                << "ERROR: " << e << std::endl
+                << std::endl;
     }
   }
 }
@@ -145,13 +150,16 @@ int main()
           int executionTimeInSeconds = 0;
           float clock = 0;
 
+          std::cout << std::endl
+                    << "++ Machine code #[0000x" << (cont + 1) << "], follow the instructions: " << std::endl;
+
           while (!instructions || !executionTimeInSeconds || !clock)
           {
             try
             {
               while (!instructions)
               {
-                instructions = inputInt(">> Insert an number of instructions: ");
+                instructions = inputInt("> Insert an number of instructions: ");
               }
 
               while (!executionTimeInSeconds)
