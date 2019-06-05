@@ -15,12 +15,11 @@ int GERAL_COUNT = 0;
 void drawMenu()
 {
   system("cls");
-  std::cout
-      << "---------------------------" << std::endl;
-  std::cout << "---------------------------" << std::endl;
-  std::cout << "-V  WELCOME TO THE CU !  V-" << std::endl;
-  std::cout << "---------------------------" << std::endl;
-  std::cout << "---------------------------" << std::endl;
+  std::cout << "*** WELCOME TO THE MIPS CALCULATOR, by: Gabriel Santos ***" << std::endl
+            << std::endl
+            << std::endl
+            << std::endl
+            << std::endl;
 }
 
 int inputInt(const char *e)
@@ -91,7 +90,7 @@ int getOption()
     {
       std::cout << "*** Choose one of these options" << std::endl
                 << "1. Calculate MIPS average" << std::endl
-                << "2. Compare MIPS results" << std::endl
+                << "2. Compare last " << MAX_MACHINES << " MIPS results" << std::endl
                 << "3. Exit" << std::endl
                 << std::endl;
 
@@ -143,6 +142,7 @@ int main()
       {
       case 1:
       {
+        GERAL_COUNT = 0;
         int cont = 0;
         do
         {
@@ -188,9 +188,9 @@ int main()
         for (int i = 0; i < MAX_MACHINES; i++)
         {
           std::cout << std::endl
-                    << "== Machine (" << i << ") [MIPS] = " << payload[i][0];
+                    << "== Machine code #[0000x" << i << "] [MIPS] = " << payload[i][0];
           std::cout << std::endl
-                    << "== Machine (" << i << ") [CPI] = " << payload[i][1]
+                    << "== Machine code #[0000x" << i << "] [CPI] = " << payload[i][1]
                     << std::endl;
         }
         std::cout << std::endl;
@@ -201,7 +201,45 @@ int main()
       }
       case 2:
       {
-        std::cout << "SECOND OPTION" << std::endl;
+
+        double bestMips = 0;
+        double bestCPI = 0;
+        int bestMachineMips = 0;
+        int bestMachineCPI = 0;
+
+        for (int i = 0; i < MAX_MACHINES; i++)
+        {
+          if (payload[i][0] > bestMips || !i)
+          {
+            bestMachineMips = i + 1;
+            bestMips = payload[i][0];
+          }
+
+          if (payload[i][1] < bestCPI || !i)
+          {
+            bestMachineCPI = i + 1;
+            bestCPI = payload[i][1];
+          }
+        }
+
+        std::cout << std::endl
+                  << ">>>>> Follow the comparation results:";
+
+        std::cout << std::endl
+                  << "== Best Machine in MIPS category = " << bestMachineMips << std::endl
+                  << "\tWith value: " << bestMips;
+
+        std::cout << std::endl
+                  << std::endl
+                  << "== Best Machine in CPI category = " << bestMachineCPI << std::endl
+                  << "\tWith value: " << bestCPI
+                  << std::endl
+                  << std::endl
+                  << std::endl
+                  << std::endl;
+
+        system("pause");
+
         break;
       }
       case 3:
